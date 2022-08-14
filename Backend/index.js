@@ -1,11 +1,11 @@
 import express from "express";
-import fileUpload from "express-fileupload";
+import FileUpload from "express-fileupload";
 import cors from "cors";
 import MasterRoute from "./routes/MasterRoute.js";
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(fileUpload());
+app.use(FileUpload());
 app.use(MasterRoute);
 
 app.listen(5000, () => {

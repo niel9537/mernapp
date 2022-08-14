@@ -26,19 +26,20 @@ export const saveMaster = (req,res)=>{
     if(req.foto === null)return res.status(400).json({msg:"No Image Uploaded"});
  
     const nama = req.body.nama;
-    const filefoto = req.files.foto;
-    const fotoSize = filefoto.data.length;
+    const jenis = req.body.jenis;
+    const foto = req.files.foto;
+    const fotoSize = foto.data.length;
     const ext = path.extname(foto.name);
-    const fotoNama = filefoto.md5 + ext;
-    const foto = `${req.protocol};//${req.get("host")}/images/${fotoNama}`;
+    const fotoNama = foto.md5 + ext;
+    const finalFoto = `${req.protocol};//${req.get("host")}/images/${fotoNama}`;
     const allowedType = ['.png','.jpg','.jpeg'];
     if(!allowedType.includes(ext.toLowerCase())) return res.status(422).json({msg:"Invalid Images"});
     if(fotoSize>5000000) return res.status(422).json({msg:"Image Must Be Less Than 5 MB"});
 
-    filefoto.mv(`./public/images/${fotoNama}`, async(err)=>{
+    foto.mv(`./public/images/${fotoNama}`, async(err)=>{
         if(err) return res.status(500).json({msg:err.message});
         try {
-            await Master.create({nama:nama,jenis:jenis,foto:foto});
+            await Master.create({nama:nama,jenis:jenis,foto:finalFoto});
             res.status(201).json({msg:"Master Created Successfuly"});
         } catch (error) {
             console.log(error.message);

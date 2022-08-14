@@ -23,8 +23,8 @@ export const getMasterById = async(req,res)=>{
 }
 
 export const saveMaster = (req,res)=>{
-    if(req.foto == null)return res.status(400).json({msg:"No Image Uploaded"});
-
+    if(req.foto === null)return res.status(400).json({msg:"No Image Uploaded"});
+ 
     const nama = req.body.nama;
     const filefoto = req.files.foto;
     const fotoSize = filefoto.data.length;
@@ -53,3 +53,4 @@ export const updateMaster = (req,res)=>{
 export const deleteMaster = (req,res)=>{
     
 }
+
